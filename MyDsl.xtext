@@ -1,0 +1,54 @@
+grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
+
+generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
+
+Model:
+    greetings+=Program*;
+    
+Program:
+    '(' (Math | Define | function | "if" conditional)')'
+;
+
+
+conditional:
+	'('comparator ID  ID')'
+;
+
+Define:
+	"define" Program Program
+;
+comparator:
+	'<' | '>' | '<=' | '>=' | '==' | '!='
+;
+
+print:
+     TEXTO
+;
+
+function:
+	ID ID
+;
+
+functionCall:
+	'('ID INT')'	
+;
+
+operator:
+    ("+" | "-" | "*" |"/")
+;
+
+Math:
+    operator Element* 
+;
+
+Element: 
+    INT |'('Math')'| operator 
+;
+
+
+terminal TEXTO:
+	'"'  -> '"'
+;
+
+
+
