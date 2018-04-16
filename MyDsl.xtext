@@ -6,36 +6,26 @@ Model:
     greetings+=Program*;
     
 Program:
-    '(' (Math | Define | function | "if" conditional)')'
-;
-
-
-conditional:
-	'('comparator ID  ID')'
+    ID |'(' (Define | function | conditional) ')'
 ;
 
 Define:
-	"define" Program Program
+	"define" "(" ID* ")" Program*
 ;
+
+conditional:
+	"if" '('comparator ID  ID')' Program*
+;
+
+
 comparator:
 	'<' | '>' | '<=' | '>=' | '==' | '!='
 ;
 
-print:
-     TEXTO
-;
-
 function:
-	ID ID
+	ID (ID |'('function')') Program
 ;
 
-functionCall:
-	'('ID INT')'	
-;
-
-operator:
-    ("+" | "-" | "*" |"/")
-;
 
 Math:
     operator Element* 
@@ -50,5 +40,11 @@ terminal TEXTO:
 	'"'  -> '"'
 ;
 
-
+terminal OPERATOR:
+    ("+" | "-" | "*" |"/")
+;
+@Override
+terminal ID:
+	("!" | "$" | "%"| ":" | "<" | "="| ">" | "?" |'a'..'z'|'A'..'Z' |INT|OPERATOR)*
+;
 
