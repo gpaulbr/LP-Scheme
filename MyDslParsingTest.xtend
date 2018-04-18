@@ -22,7 +22,8 @@ class MyDslParsingTest {
 	def void loadModel() {
 		val result = parseHelper.parse('''
 			(define (fib n)
-			(if (<= n a))
+			(if (<= n 10))
+			
 			)
 		''')
 		Assert.assertNotNull(result)
@@ -30,7 +31,7 @@ class MyDslParsingTest {
 	}
 	
 	@Test
-	def void teste2() {
+	def void fib() {
 		val result = parseHelper.parse('''
 			(fib n)
 		''')
@@ -38,8 +39,18 @@ class MyDslParsingTest {
 		Assert.assertTrue(result.eResource.errors.isEmpty)
 	}
 	
+	
 	@Test
-	def void teste3() {
+	def void math1() {
+		val result = parseHelper.parse('''
+			(+ 10)
+		''')
+		Assert.assertNotNull(result)
+		Assert.assertTrue(result.eResource.errors.isEmpty)
+	}
+	
+	@Test
+	def void math2() {
 		val result = parseHelper.parse('''
 			(+ 10 10)
 		''')
@@ -48,20 +59,52 @@ class MyDslParsingTest {
 	}
 	
 	@Test
-	def void teste4() {
+	def void mathFunc() {
 		val result = parseHelper.parse('''
-			(+ 10 10)
+			(+ (fib n))
 		''')
 		Assert.assertNotNull(result)
 		Assert.assertTrue(result.eResource.errors.isEmpty)
 	}
 	
 		@Test
-	def void teste5() {
+	def void testIf() {
 		val result = parseHelper.parse('''
 			(if (<= n a))
 		''')
 		Assert.assertNotNull(result)
 		Assert.assertTrue(result.eResource.errors.isEmpty)
 	}
+	
+	@Test
+	def void define() {
+		val result = parseHelper.parse('''
+			(define (fib n)
+			  (if (<= n 2)
+			      ))
+		''')
+		Assert.assertNotNull(result)
+		Assert.assertTrue(result.eResource.errors.isEmpty)
+	}
+	
+	@Test
+	def void fibonacci() {
+		val result = parseHelper.parse('''
+			(define (fib n)
+			  (if (<= n 2)
+			      (+ (fib (- n 1)) (fib (- n 2)))))
+		''')
+		Assert.assertNotNull(result)
+		Assert.assertTrue(result.eResource.errors.isEmpty)
+	}
+	
+		@Test
+	def void fibonacci3() {
+		val result = parseHelper.parse('''
+			(+ (fib (- n 1))) 
+		''')
+		Assert.assertNotNull(result)
+		Assert.assertTrue(result.eResource.errors.isEmpty)
+	}
+	
 }
