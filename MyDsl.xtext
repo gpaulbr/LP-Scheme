@@ -2,6 +2,8 @@ grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
 
 generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
 
+
+
 Model:
     greetings+=Program*;
     
@@ -23,16 +25,16 @@ comparator:
 ;
 
 function:
-	ID (ID |'('function')') Program
+	(ID | OPERATOR) (ID+ |'('function')') Program*
 ;
 
 
 Math:
-    operator Element* 
+    (OPERATOR Element* | '('Math')')
 ;
 
 Element: 
-    INT |'('Math')'| operator 
+    ID | OPERATOR
 ;
 
 
@@ -45,6 +47,6 @@ terminal OPERATOR:
 ;
 @Override
 terminal ID:
-	("!" | "$" | "%"| ":" | "<" | "="| ">" | "?" |'a'..'z'|'A'..'Z' |INT|OPERATOR)*
+	("!" | "$" | "%"| ":" | "<" | "="| ">" | "?" |'a'..'z'|'A'..'Z' | INT | OPERATOR)*
 ;
 
