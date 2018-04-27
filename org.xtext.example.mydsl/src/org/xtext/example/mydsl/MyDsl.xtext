@@ -1,0 +1,24 @@
+grammar org.xtext.example.mydsl.MyDsl with org.eclipse.xtext.common.Terminals
+
+generate myDsl "http://www.xtext.org/example/mydsl/MyDsl"
+
+Program:
+	expressions+=Expression+;
+
+Expression:
+	Atom | List;
+
+Atom:
+	name=ID | ivalue=INT | bvalue=BOOLEAN | dvalue=DOUBLE | svalue=STRING;
+
+List:
+	'(' calle=ID params+=Expression* ')';
+
+terminal DOUBLE:
+	INT '.' INT;
+
+terminal BOOLEAN:
+	'#t' | '#f';
+
+@ Override terminal ID:
+	('^')? ('a'..'z' | 'A'..'Z' | '_') ('a'..'z' | 'A'..'Z' | '_' | '0'..'9' | '!')* |'-' | '+' | '=' | '<';
