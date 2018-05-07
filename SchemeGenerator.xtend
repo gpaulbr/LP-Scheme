@@ -48,60 +48,64 @@ class SchemeGenerator extends AbstractGenerator {
 			}
 			
 			
-			«FOR d : r.allContents.toIterable.filter(Atom)»
-					«IF (d.name == "define")»
-						«d.definition»
-					«ENDIF»
-			«ENDFOR»
+			Â«FOR d : r.allContents.toIterable.filter(Atom)Â»
+					Â«IF (d.name == "define")Â»
+						Â«d.definitionÂ»
+					Â«ENDIFÂ»
+			Â«ENDFORÂ»
 				        
 			
 			
 			public static void main(String[] args) throws Exception {
-			«FOR p : r.allContents.toIterable.filter(Program)»
-					« FOR e : p.expressions »
-						«e.compile»
-					«ENDFOR»
-				«ENDFOR»
+			Â«FOR p : r.allContents.toIterable.filter(Program)Â»
+					Â« FOR e : p.expressions Â»
+						Â«e.compileÂ»
+					Â«ENDFORÂ»
+				Â«ENDFORÂ»
 			
 			}
 		}
 		'''
 
 	def dispatch definition(Atom at)'''
-		private static void «at.name»(){
+		private static void Â«at.nameÂ»(){
 			
 		}
 	
 	'''
 
 	def dispatch compile(Atom at) '''
-			«IF (at.ivalue != 0)»
-				int num = «at.ivalue» ;
+			Â«IF (at.ivalue != 0)Â»
+				int num = Â«at.ivalueÂ» ;
 				System.out.println(num);
-			«ENDIF»
+			Â«ENDIFÂ»
 						'''
 	
 	def dispatch compile(List li) '''
-			«IF (li.calle == "+")»
+			Â«IF (li.calle == "+")Â»
 			ArrayList<int> soma = new Arraylist()<>;
-				«FOR p : li.params.filter(Atom)»
-					«IF p.ivalue != 0»
-						soma.add(«p.ivalue»);
-					«ENDIF»
-				«ENDFOR»
+				Â«FOR p : li.params.filter(Atom)Â»
+					Â«IF p.ivalue != 0Â»
+						soma.add(Â«p.ivalueÂ»);
+					Â«ENDIFÂ»
+					
+					Â«IF p.dvalue != 0.0Â»
+						soma.add(Â«p.dvalueÂ»);
+					Â«ENDIFÂ»
+				Â«ENDFORÂ»
 				System.out.println(somaArray(soma));	
-			«ENDIF»
-		
-		
-		
-			«IF (li.calle == "-")»
+			Â«ENDIFÂ»
+			Â«IF (li.calle == "-")Â»
 					ArrayList<int> sub = new Arraylist()<>;
-						«FOR p : li.params.filter(Atom)»
-							«IF p.ivalue != 0»
-								sub.add(«p.ivalue»);
-							«ENDIF»
-						«ENDFOR»
+						Â«FOR p : li.params.filter(Atom)Â»
+							Â«IF p.ivalue != 0Â»
+								sub.add(Â«p.ivalueÂ»);
+							Â«ENDIFÂ»
+							Â«IF p.dvalue != 0.0Â»
+								sub.add(Â«p.dvalueÂ»);
+							Â«ENDIFÂ»
+						Â«ENDFORÂ»
 						System.out.println(subArray(sub));	
-					«ENDIF»
+					Â«ENDIFÂ»
 			'''
 }
